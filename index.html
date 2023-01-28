@@ -130,16 +130,14 @@ x = {-b \pm \sqrt{b^2-4ac} \over 2a}.
 </div>
 
 </div>
-<?php
-    $img = $_POST['imgData'];
-    $img = str_replace('data:image/png;base64,', '', $img);
-    $img = str_replace(' ', '+', $img);
-    $data = base64_decode($img);
-    $file = 'images/image.png';
-    file_put_contents($file, $data);
-?>
+<form action="index.php" method="post">
+  <input type="hidden" id="imgData" name="imgData">
+  <input type="button" value="Save as PNG" onclick="saveImage()">
+</form>
+<input type="submit" value="Save as PNG" onclick="saveImage()">
 
   <script>
+    document.getElementById("imgData").value = canvas.toDataURL();
     $(document).ready(function() {
       // Selecione o elemento HTML que deseja salvar como imagem
       var elementToSave = document.getElementById("elementId");

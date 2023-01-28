@@ -130,12 +130,17 @@ x = {-b \pm \sqrt{b^2-4ac} \over 2a}.
 </div>
 
 </div>
-<form action="index.php" method="post">
-  <input type="hidden" id="imgData" name="imgData">
-  <input type="button" value="Save as PNG" onclick="saveImage()">
-</form>
-<input type="submit" value="Save as PNG" onclick="saveImage()">
-
+<button id="export-btn" onclick="exportContent()">Exportar como imagem</button>
+<script>
+  function exportContent() {
+    html2canvas(document.getElementById("output"), {
+      allowTaint: true,
+      useCORS: true
+    }).then(function(canvas) {
+      Canvas2Image.saveAsPNG(canvas);
+    });
+  }
+</script>
   
 <footer class="footer mt-auto py-3" style="background-color: black; height: 120px">
   <div class="container">
@@ -145,32 +150,7 @@ x = {-b \pm \sqrt{b^2-4ac} \over 2a}.
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
-<script>
-  document.getElementById("imgData").value = canvas.toDataURL();
-  $(document).ready(function() {
-    // Selecione o elemento HTML que deseja salvar como imagem
-    var elementToSave = document.getElementById("elementId");
 
-    // Use html2canvas para capturar a representação de imagem do elemento
-    html2canvas(elementToSave, {
-      onrendered: function(canvas) {
-        // Converta o canvas em uma imagem
-        var imgData = canvas.toDataURL("image/png");
-
-        // Envie a imagem para o seu servidor para salvar
-        $.ajax({
-          type: "POST",
-          url: "save-image.php",
-          data: {
-            imgData: imgData
-          }
-        }).done(function(response) {
-          console.log("Imagem salva com sucesso!");
-        });
-      }
-    });
-  });
-</script>
 
 
 </html>
